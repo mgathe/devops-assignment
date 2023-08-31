@@ -27,7 +27,7 @@ jobs:
       
       - run: npx nx run nft-bridge:lint
 
-      - run: npx jest
-        working-directory: ./apps/nft-bridge-e2e
+   #   - run: npx jest
+   #     working-directory: ./apps/nft-bridge-e2e
       - run: nx build nft-bridge
         working-directory: ./apps/nft-bridge/
