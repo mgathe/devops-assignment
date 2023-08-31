@@ -24,6 +24,7 @@ jobs:
       - run: npm ci
 
       - run: yarn nx run-many --target=build --all 
+      - run: node ./dist/apps/nft-bridge/main.js
       
       - run: npx nx run nft-bridge:lint
 
