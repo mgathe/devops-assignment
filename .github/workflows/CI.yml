@@ -18,7 +18,7 @@ jobs:
             node-version: 18
       - name: NPM Install
         run: |
-         npm install
+         npm install --global nx@latest
             
       - uses: nrwl/nx-set-shas@v3
       - run: npm ci
@@ -29,4 +29,4 @@ jobs:
 
       #- run: npx jest
       - run: nx build nft-bridge
-        working-directory: ./apps/nft-bridge/
+      #  working-directory: ./apps/nft-bridge/
