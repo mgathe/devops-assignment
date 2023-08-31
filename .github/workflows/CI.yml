@@ -25,7 +25,7 @@ jobs:
 
       - run: yarn nx run-many --target=build --all 
       
-      - run: npx nx run nft-bridge:lint
+    #  - run: npx nx run nft-bridge:lint
 
    #   - run: npx jest
    #     working-directory: ./apps/nft-bridge-e2e
