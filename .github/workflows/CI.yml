@@ -30,4 +30,7 @@ jobs:
    #   - run: npx jest
    #     working-directory: ./apps/nft-bridge-e2e
       - run: nx build nft-bridge
-      - run: node ./dist/apps/nft-bridge/main.js
+      - run: |
+            ls -a
+            pwd
+      
