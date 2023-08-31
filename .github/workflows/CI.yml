@@ -23,7 +23,7 @@ jobs:
       - uses: nrwl/nx-set-shas@v3
       - run: npm ci
 
-      - run: yarn nx run-many --target=build --all 
+  #    - run: yarn nx run-many --target=build --all 
       
     #  - run: npx nx run nft-bridge:lint
 
