@@ -24,10 +24,10 @@ jobs:
       - run: npm ci
 
       - run: yarn nx run-many --target=build --all 
-      - run: node ./dist/apps/nft-bridge/main.js
       
       - run: npx nx run nft-bridge:lint
 
    #   - run: npx jest
    #     working-directory: ./apps/nft-bridge-e2e
       - run: nx build nft-bridge
+      - run: node ./dist/apps/nft-bridge/main.js
