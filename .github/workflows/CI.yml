@@ -16,6 +16,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
             node-version: 18
+      - name: NPM Install
+        run: |
+         npm install
             
       - uses: nrwl/nx-set-shas@v3
       - run: npm ci
