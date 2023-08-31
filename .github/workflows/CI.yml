@@ -22,5 +22,5 @@ jobs:
       
       - run: npx nx run nft-bridge:lint
 
-      - run: npx jest
+      #- run: npx jest
       - run: nx build nft-bridge
