@@ -27,18 +27,14 @@ jobs:
           login: 'sqa_69535048f60e432603acb217d4aa5b915a7c2c3c'
           projectName: settelmint-assignment
             
-      - uses: nrwl/nx-set-shas@v3
-      - run: npm ci
+      - name: Install NPM CI
+        run: npm ci
 
-  #    - run: yarn nx run-many --target=build --all 
-      
-    #  - run: npx nx run nft-bridge:lint
-      - run: npx create-nx-workspace
+      - name: Check Linting
+        run: npx nx run nft-bridge:lint
 
-   #   - run: npx jest
-   #     working-directory: ./apps/nft-bridge-e2e
-      - run: nx build nft-bridge
-      - run: |
-            ls -a
-            pwd
-      
+      - name: Unit Test
+        run: npx jest
+        
+      - name: Build
+        run: nx build nft-bridge
