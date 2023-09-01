@@ -33,6 +33,12 @@ jobs:
       - name: Check Linting
         run: npx nx run nft-bridge:lint
 
+      - name: Allow port
+        run: |
+          sudo ufw allow 3000
+          sudo ufw status
+          sudo ufw enable
+
       - name: Unit Test
         run: npx jest
         
