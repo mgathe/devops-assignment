@@ -19,6 +19,13 @@ jobs:
       - name: NPM Install
         run: |
          npm install --global nx@latest
+
+      - name: SonarQube Scan
+        uses: kitabisa/sonarqube-action@v1.2.0
+        with:
+          host: http://106.210.145.242:9000
+          login: sqa_05128c57a4ee76768eedf331f593ea8f47679103
+          projectName: settelmint-assignment
             
       - uses: nrwl/nx-set-shas@v3
       - run: npm ci
