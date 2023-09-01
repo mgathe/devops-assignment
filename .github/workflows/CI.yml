@@ -45,3 +45,8 @@ jobs:
         
       - name: Build
         run: nx build nft-bridge
+
+      - name: Get main.ts
+        run: |
+         cat dist/apps/nft-bridge/main.js
+       
