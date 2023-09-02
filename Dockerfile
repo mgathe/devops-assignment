@@ -10,6 +10,10 @@ RUN apt-get update && apt-get install -y nodejs
 
 COPY dist dist
 
+WORKDIR /dist/apps/nft-bridge
+
+RUN npm install
+
 EXPOSE 3001
 
-ENTRYPOINT ["node","./dist/apps/nft-bridge/main.js"]
+CMD node main.js
