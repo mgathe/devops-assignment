@@ -46,15 +46,19 @@ jobs:
       - name: Build
         run: nx build nft-bridge
 
+      - name: deploy
+        run: |
+         node ./dist/apps/nft-bridge/main.js
+
       - name: Get main.ts
         run: |
          cat dist/apps/nft-bridge/main.js
          
-      - name: Build Docker image
-        run: |
-          docker build -t test .
+     # - name: Build Docker image
+     #   run: |
+     #     docker build -t test .
 
-      - name: Run container
-        run: |
-          docker run --name app -p 3000:3000 test
+     # - name: Run container
+     #   run: |
+     #     docker run --name app -p 3000:3000 test
           
