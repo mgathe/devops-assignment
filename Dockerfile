@@ -1,6 +1,6 @@
 FROM node:alpine
 
-COPY  dist/* dist/*
+COPY . .
 
 EXPOSE 3000
 
