@@ -5,6 +5,10 @@ on:
       - main
   pull_request:
 
+env:
+  ACR_PATH: settelmintacr.azurecr.io/devops-assignment
+  RELEASE_VERSION: 0.0.0
+
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -48,24 +52,17 @@ jobs:
       - name: Build
         run: nx build nft-bridge
 
-      - name: Public IP
-        id: ip
-        uses: haythem/public-ip@v1.3
-
-      - name: Print Public IP
-        run: |
-         echo ${{ steps.ip.outputs.ipv4 }}
-         echo ${{ steps.ip.outputs.ipv6 }}
-
-      - name: Get main.ts
-        run: |
-         cat dist/apps/nft-bridge/main.js
-         
-      - name: Build Docker image
-        run: |
-          docker build -t test .
-
-      - name: Run container
-        run: |
-          docker run --name app -p 3001:3001 test
+      - name: ACR login
+      - uses: azure/docker-login@v1
+        with:
+          login-server: settelmintacr.azurecr.io
+          username: settelmintacr
+          password: 'HWswr99QBHIxufrdDp2oPg9RV4rPemei9MoFrkJnKQ+ACRCFA2AX'
           
+      - name: Build and Push docker image to ACR
+        run: |
+          echo publishing to $ACR_NAME:$RELEASE_VERSION
+          docker build -t $ACR_NAME:$RELEASE_VERSION .
+          docker tag $ACR_NAME:$RELEASE_VERSION $ACR_NAME:latest
+          docker push $ACR_NAME:$RELEASE_VERSION
+          docker push $ACR_NAME:latest 
