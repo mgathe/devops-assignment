@@ -20,12 +20,12 @@ jobs:
         run: |
          npm install --global nx@latest
 
-      - name: SonarQube Scan
-        uses: kitabisa/sonarqube-action@v1.2.0
-        with:
-          host: 'http://20.55.236.109:9000'
-          login: 'sqa_69535048f60e432603acb217d4aa5b915a7c2c3c'
-          projectName: settelmint-assignment
+  #    - name: SonarQube Scan
+  #      uses: kitabisa/sonarqube-action@v1.2.0
+  #      with:
+  #        host: 'http://20.55.236.109:9000'
+  #        login: 'sqa_69535048f60e432603acb217d4aa5b915a7c2c3c'
+  #        projectName: settelmint-assignment
             
       - name: Install NPM CI
         run: npm ci
@@ -49,4 +49,8 @@ jobs:
       - name: Get main.ts
         run: |
          cat dist/apps/nft-bridge/main.js
-       
+         
+      - name: Build Docker image
+        run: |
+          docker build -t test .
+          
