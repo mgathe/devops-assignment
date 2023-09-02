@@ -6,7 +6,7 @@ on:
   pull_request:
 
 env:
-  ACR_PATH: settelmintacr.azurecr.io/devops-assignment
+  ACR_NAME: settelmintacr.azurecr.io/devops-assignment
   RELEASE_VERSION: 0.0.0
 
 jobs:
