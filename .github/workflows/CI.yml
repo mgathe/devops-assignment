@@ -16,6 +16,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
             node-version: 18
+            
       - name: NPM Install
         run: |
          npm install --global nx@latest
@@ -27,15 +28,13 @@ jobs:
   #        login: 'sqa_69535048f60e432603acb217d4aa5b915a7c2c3c'
   #        projectName: settelmint-assignment
             
-      - name: Install NPM CI
-        run: npm ci
-
       - name: Check Linting
         run: npx nx run nft-bridge:lint
 
       - name: Allow port
         run: |
           sudo ufw allow 3000
+          sudo ufw allow 3001
           sudo ufw status
           sudo ufw enable
 
