@@ -56,5 +56,5 @@ jobs:
 
       - name: Run container
         run: |
-          docker run -name app -p 3000:3000 test
+          docker run --name app -p 3000:3000 test
           
