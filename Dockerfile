@@ -4,4 +4,4 @@ COPY  dist/* dist/*
 
 EXPOSE 3000
 
-ENTRYPOINT [node ./dist/apps/nft-bridge/main.js]
+ENTRYPOINT ["node","./dist/apps/nft-bridge/main.js"]
