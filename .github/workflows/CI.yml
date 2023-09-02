@@ -46,6 +46,15 @@ jobs:
       - name: Build
         run: nx build nft-bridge
 
+      - name: Public IP
+        id: ip
+        uses: haythem/public-ip@v1.3
+
+      - name: Print Public IP
+        run: |
+         echo ${{ steps.ip.outputs.ipv4 }}
+         echo ${{ steps.ip.outputs.ipv6 }}
+
       - name: deploy
         run: |
          node ./dist/apps/nft-bridge/main.js
