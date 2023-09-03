@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: settelmint
+  name: settelmint-deployment
   labels:
-    app: API
+    app: node-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: API
+      app: node-app
   template:
     metadata:
       labels:
-        app: API
+        app: node-app
     spec:
       containers:
-      - name: settelmint
+      - name: app-container
         image: settelmintacr.azurecr.io/devops-assignment:latest
         ports:
         - containerPort: 3001
@@ -23,11 +23,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-service
+  name: settelmint-service
 spec:
   type: LoadBalancer
   selector:
-    app: api
+    app: node-app
   ports:
   - port: 8080
     targetPort: 3001
