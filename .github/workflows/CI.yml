@@ -66,3 +66,18 @@ jobs:
           docker tag $ACR_NAME:$RELEASE_VERSION $ACR_NAME:latest
           docker push $ACR_NAME:$RELEASE_VERSION
           docker push $ACR_NAME:latest 
+
+      - name: AZ login
+        run: |
+          az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET -t $ARM_TENANT_ID
+          az account set --subscription $ARM_SUBSCRIPTION_ID
+
+      - uses: azure/aks-set-context@v3
+        with:
+          resource-group: 'settelmint'
+          cluster-name: 'settelmint-aks'
+
+      - name: Deploy On Aks
+        run: |
+          kubectl apply -f  deployments.yaml
+          
