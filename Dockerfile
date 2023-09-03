@@ -14,6 +14,10 @@ WORKDIR /dist/apps/nft-bridge
 
 RUN npm install
 
+ENV HOST=0.0.0.0
+
+ENV PORT=3001
+
 EXPOSE 3001
 
 CMD node main.js
