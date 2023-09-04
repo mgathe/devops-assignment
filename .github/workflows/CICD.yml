@@ -1,0 +1,87 @@
+name: CI-
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+env:
+  ACR_NAME: settelmintacr.azurecr.io/devops-assignment
+  RELEASE_VERSION: 0.0.0
+  ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
+  ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
+  ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+  ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          
+      - uses: actions/setup-node@v3
+        with:
+            node-version: 18
+            
+      - name: NPM Install
+        run: |
+         npm install --global nx@latest
+
+      - name: Install NPM CI
+        run: npm ci
+
+  #    - name: SonarQube Scan
+  #      uses: kitabisa/sonarqube-action@v1.2.0
+  #      with:
+  #        host: 'http://20.55.236.109:9000'
+  #        login: 'sqa_69535048f60e432603acb217d4aa5b915a7c2c3c'
+  #        projectName: settelmint-assignment
+            
+      - name: Check Linting
+        run: npx nx run nft-bridge:lint
+
+      - name: Allow port
+        run: |
+          sudo ufw allow 3000
+          sudo ufw allow 3001
+          sudo ufw status
+          sudo ufw enable
+
+      - name: Unit Test
+        run: npx jest
+        continue-on-error: true
+        
+      - name: Build
+        run: nx build nft-bridge
+
+      - name: ACR login
+        uses: azure/docker-login@v1
+        with:
+          login-server: settelmintacr.azurecr.io
+          username: settelmintacr
+          password: ${{secrets.ACR_TOKEN}}
+          
+      - name: Build and Push docker image to ACR
+        run: |
+          echo publishing to $ACR_NAME:$RELEASE_VERSION
+          docker build -t $ACR_NAME:$RELEASE_VERSION .
+          docker tag $ACR_NAME:$RELEASE_VERSION $ACR_NAME:latest
+          docker push $ACR_NAME:$RELEASE_VERSION
+          docker push $ACR_NAME:latest 
+
+      - name: AZ login
+        run: |
+          az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET -t $ARM_TENANT_ID
+          az account set --subscription $ARM_SUBSCRIPTION_ID
+
+      - uses: azure/aks-set-context@v3
+        with:
+          resource-group: 'settelmint'
+          cluster-name: 'settelmint-aks'
+
+      - name: Deploy On Aks
+        run: |
+          kubectl apply -f  deployment.yaml
+          
